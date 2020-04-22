@@ -11,7 +11,7 @@ string Tree::find(string name)
 {
     Tree* child = findreg(this, name);
     if (child != nullptr)return child->child;
-    cout << "The tree cannot handle '" +name +"' relation";
+    throw runtime_error("The tree cannot handle '" +name +"' relation");
     return "";
 }
 
