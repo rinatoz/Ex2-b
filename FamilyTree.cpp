@@ -81,7 +81,7 @@ Tree &Tree::addFather(string childName, string fatherName)
                                 temp += "father";
                                 child->father->reg = temp;
                             }
-            return *child;
+            return *this;
         }
         else
         {
@@ -121,7 +121,7 @@ Tree &Tree::addMother(string childName, string motherName)
                                 temp += "mother";
                                 child->mother->reg = temp;
                             }
-            return *child;
+            return *this;
 
         }
         else
@@ -144,19 +144,14 @@ string Tree::relation(string name)
 
 void Tree::remove(string name)
 {
-    Tree* t = findchild(this, name);
-    string name1 = t->son->child;
-    Tree* t1 = findchild(this, name1);
-    if (t->gender == "male")
-    {
-        delete t1->father;
-        t1->father = nullptr;
-    }
-    else
-    {
-        delete t1->mother;
-        t1->mother = nullptr;
-    }
+Tree* ptr = findchild(this, name);
+	if (ptr == this) { throw runtime_error("Can't remove the root of the tree (aka -> me"); }
+	if(ptr!=nullptr){
+            if (ptr->son->mother == ptr){ ptr->son->mother = nullptr; }
+            if (ptr->son->father == ptr){ ptr->son->father = nullptr; }
+            delete ptr;
+      }
+      else { throw runtime_error(name+" is not in the tree"); }
 
 
 }
